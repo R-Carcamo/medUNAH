@@ -79,8 +79,25 @@ public class ControladorFactura implements Initializable {
 		txtTotPagar.setText(null);
 		dtpFecha.setValue(null);
 	}
+
 	@FXML
 	public void mostrarClientes(){
 		main.agregarCliente();
+	}
+
+	@FXML
+	public void cancelarFactura(){
+
+
+	}
+
+	@FXML
+	public void aplicarDescuento(){
+
+	}
+
+	@FXML
+	public void buscarProducto(){
+
 	}
 }
