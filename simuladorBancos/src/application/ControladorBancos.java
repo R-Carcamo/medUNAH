@@ -2,6 +2,7 @@ package application;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.URL;
@@ -15,19 +16,24 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
+import modelo.Tarjeta;
+import modelo.pagoTarjeta;
+import utilidades.GestorConexiones;
 
 
 public class ControladorBancos implements Initializable{
 	private boolean finalizo = false;
 	private ServerSocket servidor;
-
+	private GestorConexiones gestorConexiones;
 	@FXML private TextArea txtMensaje;
 	@FXML private TextArea txtResultado;
 	@FXML private ListView<Socket> lstClientes;
 	private ObservableList<Socket> socketsClientes;
-
+	private String resultado;
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		gestorConexiones = new GestorConexiones();
+
 		socketsClientes = FXCollections.observableArrayList();
 		lstClientes.setItems(socketsClientes);
 		Task<String> tareaEscucharPeticiones = new Task<String>(){
@@ -61,16 +67,39 @@ public class ControladorBancos implements Initializable{
 
 			@Override
 			protected String call() throws Exception {
-				DataInputStream entrada = new DataInputStream(cliente.getInputStream());
+				ObjectInputStream entrada = new ObjectInputStream(cliente.getInputStream());
 				while(!finalizo){
 					System.out.println("Esperando a que el cliente escriba algo");
-					String mensaje = entrada.readUTF();
+					try {
+					pagoTarjeta mensaje = (pagoTarjeta) entrada.readObject();
+					System.out.println("se recibio algo");
+					gestorConexiones.establecerConexion();
+					int aut = Tarjeta.efectuarPago(mensaje.getNumTarjeta(),
+											gestorConexiones.getConexion(),
+											mensaje.getTotPagar()
+											);
+					System.out.println("aut: "+aut);
+					gestorConexiones.cerrarConexion();
+					if(aut == 0){
+						resultado = "No se ha podido realizar el pago";
+						enviarMensaje(resultado);
+					}
+					else if(aut == 1){
+						resultado = "Se ha realizado el pago correctamente";
+						enviarMensaje(resultado);
+					}
 					Platform.runLater(new Runnable(){
 						@Override
 						public void run() {
-								txtResultado.appendText(mensaje+"\n");
+
+								txtResultado.appendText(mensaje.getTotPagar()+"\n"+mensaje.getNumTarjeta()+"\n"+mensaje.getEmisor()+"\n");
 						}
+
 					});
+					} catch (Exception e) {
+						// TODO: handle exception
+						System.out.println(e);
+					}
 				}
 				servidor.close();
 				cliente.close();
@@ -91,6 +120,7 @@ public class ControladorBancos implements Initializable{
 					lstClientes.getSelectionModel().getSelectedItem();
 			DataOutputStream salida = new DataOutputStream(clienteSeleccionado.getOutputStream());
 			salida.writeUTF("[SERVIDOR]: " + txtMensaje.getText());
+			System.out.println("[SERVIDOR]: " + txtMensaje.getText());
 			txtResultado.appendText("[SERVIDOR]: " + txtMensaje.getText()+"\n");
 			txtMensaje.setText(null);
 			//salida.close();
@@ -98,5 +128,18 @@ public class ControladorBancos implements Initializable{
 			e.printStackTrace();
 		}
 	}
-
+	public void enviarMensaje(String m){
+		 try {
+			Socket clienteSeleccionado =
+					lstClientes.getSelectionModel().getSelectedItem();
+			DataOutputStream salida = new DataOutputStream(clienteSeleccionado.getOutputStream());
+			salida.writeUTF(m);
+			System.out.println(m);
+			txtResultado.appendText("[SERVIDOR]: " + m+"\n");
+			txtMensaje.setText(null);
+			//salida.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 }
