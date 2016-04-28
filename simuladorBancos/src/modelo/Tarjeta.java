@@ -161,7 +161,7 @@ public class Tarjeta{
 	}
 	//Llenar Lista
 }*/
-	public static int efectuarPago(String string,
+	public static int efectuarPago(String id,
 			Connection conexion,
 			double tot
 		){
@@ -175,20 +175,20 @@ public class Tarjeta{
 				  "codigo_tarjeta, "+
 				  "tlb_cuenta_codigo_cuenta, "+
 				  "numero_tarjeta, "+
-				  "fecha_creacion, "+
+				  "tlb_tarjeta.fecha_creacion, "+
 				  "fecha_vencimiento, "+
 				  "nombre,"+
 				  "emisor,"+
 				  "validez, "+
-				  "tlb_cuenta.saldo "+
+				  "tlb_cuenta.saldo, "+
 				  "tlb_cuenta.codigo_cuenta "+
 				"FROM "+
 				  "tlb_tarjeta "+
 				  "JOIN " +
 				  "tlb_cuenta "+
 				  "ON "+
-				  "tlb_tarjeta.tlb_cuenta_codigo_cuenta = tlb_cuenta.codigo_cuenta"+
-				"WHERE numero_tarjeta = "+string);
+				  "tlb_tarjeta.tlb_cuenta_codigo_cuenta = tlb_cuenta.codigo_cuenta "+
+				"WHERE numero_tarjeta = "+id);
 
 		while(resultado.next()){
 				t =	new Tarjeta(
@@ -217,7 +217,7 @@ public class Tarjeta{
 				PreparedStatement instruccion1 =
 						conexion.prepareStatement(
 								"UPDATE tlb_cuenta "+
-								"SET saldo = ?, "+
+								"SET saldo = ? "+
 								"WHERE codigo_cuenta = ?");
 
 				instruccion1.setDouble(1, saldo);

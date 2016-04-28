@@ -45,7 +45,10 @@ public class ControladorTarjeta implements Initializable{
 					salida = new  ObjectOutputStream(cliente.getOutputStream());
 					entrada = new DataInputStream(cliente.getInputStream());
 					while(!finalizo){
-						String mensaje = entrada.readUTF();
+						try {
+							String mensaje = entrada.readUTF();
+
+
 
 						Platform.runLater(new Runnable(){
 							@Override
@@ -55,6 +58,10 @@ public class ControladorTarjeta implements Initializable{
 						        alert.setTitle("Notificacion");
 						        alert.setContentText(mensaje);
 						        alert.showAndWait();
+						        if(mensaje.equals("Se ha realizado el pago correctamente"))
+						        {
+						        	main.cerrarPagoTar();
+						        }
 						        /*if(todo esta corecto){
 						         * cliente.close();
 						         * main.cerrarPagoTar();
@@ -62,6 +69,10 @@ public class ControladorTarjeta implements Initializable{
 						         */
 							}
 						});
+						} catch (Exception e) {
+							// TODO: handle exception
+							System.out.println(e);
+						}
 					}
 					//cliente.close();
 				} catch (UnknownHostException e) {
@@ -98,6 +109,8 @@ public class ControladorTarjeta implements Initializable{
 	        alert.setContentText("El Pago no se ha realizado con exito");
 	        alert.showAndWait();
 		}
+
+		//main.cerrarPagoTar();
 	}
 
 	public Main getMain() {

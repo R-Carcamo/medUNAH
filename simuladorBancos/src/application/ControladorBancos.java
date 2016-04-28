@@ -29,7 +29,7 @@ public class ControladorBancos implements Initializable{
 	@FXML private TextArea txtResultado;
 	@FXML private ListView<Socket> lstClientes;
 	private ObservableList<Socket> socketsClientes;
-	private String resultado;
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		gestorConexiones = new GestorConexiones();
@@ -63,10 +63,12 @@ public class ControladorBancos implements Initializable{
 	}
 
 	public void procesarMensajesCliente(Socket cliente){
+
 		Task<String> tareaLecturaMensajes = new Task<String>(){
 
 			@Override
 			protected String call() throws Exception {
+
 				ObjectInputStream entrada = new ObjectInputStream(cliente.getInputStream());
 				while(!finalizo){
 					System.out.println("Esperando a que el cliente escriba algo");
@@ -81,12 +83,10 @@ public class ControladorBancos implements Initializable{
 					System.out.println("aut: "+aut);
 					gestorConexiones.cerrarConexion();
 					if(aut == 0){
-						resultado = "No se ha podido realizar el pago";
-						enviarMensaje(resultado);
+						enviarMensaje("No se ha podido realizar el pago",cliente);
 					}
 					else if(aut == 1){
-						resultado = "Se ha realizado el pago correctamente";
-						enviarMensaje(resultado);
+						enviarMensaje("Se ha realizado el pago correctamente",cliente);
 					}
 					Platform.runLater(new Runnable(){
 						@Override
@@ -123,15 +123,16 @@ public class ControladorBancos implements Initializable{
 			System.out.println("[SERVIDOR]: " + txtMensaje.getText());
 			txtResultado.appendText("[SERVIDOR]: " + txtMensaje.getText()+"\n");
 			txtMensaje.setText(null);
-			//salida.close();
+			////salida.close();
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-	public void enviarMensaje(String m){
+	public void enviarMensaje(String m,Socket c){
+		System.out.println("notificando");
 		 try {
-			Socket clienteSeleccionado =
-					lstClientes.getSelectionModel().getSelectedItem();
+			Socket clienteSeleccionado = c;
 			DataOutputStream salida = new DataOutputStream(clienteSeleccionado.getOutputStream());
 			salida.writeUTF(m);
 			System.out.println(m);
@@ -140,6 +141,8 @@ public class ControladorBancos implements Initializable{
 			//salida.close();
 		} catch (IOException e) {
 			e.printStackTrace();
+			System.out.println("error env(m)"+e);
+			//enviarMensaje();
 		}
 	}
 }
