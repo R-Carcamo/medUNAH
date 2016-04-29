@@ -14,12 +14,6 @@
    <children>
       <MenuBar layoutY="8.0" prefHeight="33.0" prefWidth="623.0" AnchorPane.bottomAnchor="670.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <menus>
-            <Menu mnemonicParsing="false" text="Opciones Factura">
-              <items>
-                <MenuItem mnemonicParsing="false" onAction="#aplicarDescuento" text="Descuentos" />
-                  <MenuItem mnemonicParsing="false" onAction="#cancelarFactura" text="Cancelar Factura" />
-              </items>
-            </Menu>
           <Menu mnemonicParsing="false" text="Clientes">
             <items>
               <MenuItem mnemonicParsing="false" onAction="#mostrarClientes" text="Agregar" />
@@ -67,7 +61,7 @@
             </ImageView>
          </children>
       </GridPane>
-      <GridPane layoutY="167.0" prefHeight="103.0" prefWidth="623.0" AnchorPane.bottomAnchor="433.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="167.0">
+      <GridPane layoutY="167.0" prefHeight="142.0" prefWidth="623.0" AnchorPane.bottomAnchor="394.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="167.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="278.0" minWidth="10.0" prefWidth="118.0" />
           <ColumnConstraints fillWidth="false" hgrow="SOMETIMES" maxWidth="506.0" minWidth="10.0" prefWidth="408.0" />
@@ -106,8 +100,8 @@
             <ComboBox fx:id="cboFormaPago" prefHeight="25.0" prefWidth="135.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
          </children>
       </GridPane>
-      <Separator layoutX="20.0" layoutY="280.0" prefHeight="17.0" prefWidth="566.0" AnchorPane.bottomAnchor="406.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="37.0" AnchorPane.topAnchor="280.0" />
-      <TableView fx:id="tlvDetalle" editable="true" layoutX="32.0" layoutY="336.0" prefHeight="325.0" prefWidth="553.0" AnchorPane.bottomAnchor="42.0" AnchorPane.leftAnchor="32.0" AnchorPane.rightAnchor="38.0" AnchorPane.topAnchor="336.0">
+      <Separator layoutX="25.0" layoutY="313.0" prefHeight="17.0" prefWidth="566.0" />
+      <TableView fx:id="tlvDetalle" editable="true" layoutX="32.0" layoutY="358.0" prefHeight="303.0" prefWidth="553.0">
         <columns>
           <TableColumn prefWidth="75.0" text="Codigo" />
           <TableColumn prefWidth="197.0" text="Producto" />
@@ -116,6 +110,7 @@
             <TableColumn prefWidth="95.0" text="Total" />
         </columns>
       </TableView>
+      <Label layoutX="32.0" layoutY="337.0" text="Detalle de compra" />
       <GridPane alignment="CENTER" layoutX="-6.0" layoutY="662.0" prefHeight="41.0" prefWidth="630.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
         <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -149,22 +144,6 @@
             <TextField fx:id="txtTot" disable="true" editable="false" GridPane.columnIndex="1" />
             <TextField fx:id="txtIsv" disable="true" editable="false" prefHeight="25.0" prefWidth="58.0" GridPane.columnIndex="3" />
             <TextField fx:id="txtTotPagar" disable="true" editable="false" GridPane.columnIndex="5" />
-         </children>
-      </GridPane>
-      <GridPane layoutX="33.0" layoutY="297.0" prefHeight="30.0" prefWidth="566.0" AnchorPane.bottomAnchor="376.0" AnchorPane.leftAnchor="33.0" AnchorPane.rightAnchor="24.0" AnchorPane.topAnchor="297.0">
-        <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="106.0" minWidth="10.0" prefWidth="34.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="209.0" minWidth="10.0" prefWidth="192.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-          <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-        </columnConstraints>
-        <rowConstraints>
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-        </rowConstraints>
-         <children>
-            <Label text="Detalle de compra" />
-            <Button alignment="CENTER" mnemonicParsing="false" onAction="#buscarProducto" text="Buscar" GridPane.columnIndex="4" />
          </children>
       </GridPane>
    </children>
