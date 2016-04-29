@@ -5,36 +5,27 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class GestorConexiones {
-	private final String URL = "jdbc:mysql://localhost/db_farmacia";
-	private final String USUARIO = "root";
-	private final String CONTRASENA = "";
-	private final String CONTROLADOR = "com.mysql.jdbc.Driver";
-
+	private String url = "jdbc:mysql://localhost/db_farmacia";
 	private Connection conexion;
 
-	public Connection getConexion() {
-		return conexion;
-	}
 
-	public void setConexion(Connection conexion) {
-		this.conexion = conexion;
+	public Connection getConexion(){
+		return this.conexion;
 	}
 
 	public void establecerConexion(){
 		try {
-			Class.forName(CONTROLADOR);//Cargar el driver a la clase actual.
-			//Si pasa de la siguiente linea la conexion
-			//fue exitosa.
-			System.out.println("Intentando establecer conexion...");
-			conexion = DriverManager.getConnection(
-						URL, USUARIO, CONTRASENA
-					);
-			System.out.println("Conexion Exitosa!");
-		}
-		catch (ClassNotFoundException | SQLException e) {
+			Class.forName("com.mysql.jdbc.Driver");
+			System.out.println("Intentando conectar a Mysql");
+			conexion = DriverManager.getConnection(url, "root", "");//Si pasa de esta linea se pudo conectar correctamente
+			System.out.println("Conexion exitosa");
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
+
 
 	public void cerrarConexion(){
 		try {

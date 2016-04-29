@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="421.0" prefWidth="837.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ControladorFormulario1">
+   <children>
+      <Label layoutX="7.0" text="Inventario">
+         <font>
+            <Font size="36.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtMensaje" layoutX="71.0" layoutY="87.0" />
+      <Button layoutX="20.0" layoutY="295.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="82.0" text="Nuevo" />
+      <Label layoutX="14.0" layoutY="59.0" text="Tipo:" />
+      <ComboBox layoutX="71.0" layoutY="55.0" prefWidth="150.0" />
+      <Label layoutX="10.0" layoutY="80.0" prefHeight="38.0" prefWidth="61.0" text="Producto:" />
+      <Label layoutX="15.0" layoutY="131.0" text="Cantidad:" />
+      <TextField layoutX="72.0" layoutY="127.0" />
+      <Label layoutX="14.0" layoutY="169.0" text="Fecha de Ingreso:" />
+      <DatePicker layoutX="107.0" layoutY="165.0" />
+      <Label layoutX="14.0" layoutY="204.0" prefHeight="17.0" prefWidth="40.0" text="Precio:" />
+      <TextField layoutX="72.0" layoutY="200.0" />
+      <RadioButton layoutX="34.0" layoutY="247.0" mnemonicParsing="false" text="Prescipcion" />
+      <RadioButton layoutX="144.0" layoutY="245.0" mnemonicParsing="false" text="Sin Prescipcion" />
+      <Button layoutX="130.0" layoutY="358.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="82.0" text="Eliminar" />
+      <Button layoutX="130.0" layoutY="295.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="82.0" text="Actualizar" />
+      <Button layoutX="20.0" layoutY="358.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="82.0" text="Guardar" />
+      <TableView layoutX="300.0" prefHeight="420.0" prefWidth="537.0">
+         <columns>
+            <TableColumn prefWidth="129.0" text="Tipo" />
+            <TableColumn prefWidth="129.0" text="Producto" />
+            <TableColumn prefWidth="76.0" text="Cantidad" />
+            <TableColumn prefWidth="108.0" text="Fecha de Ingreso" />
+            <TableColumn prefWidth="93.0" text="Precio" />
+            <TableColumn prefWidth="129.0" text="Disponibilidad" />
+         </columns>
+      </TableView>
+   </children>
+</AnchorPane>
