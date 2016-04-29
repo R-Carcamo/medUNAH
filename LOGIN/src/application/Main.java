@@ -447,6 +447,7 @@ public class Main extends Application {
 		}
 		registroSupervisorInventarios.show();
 		}
+//Acciones de factura
 
 			public void mostrarFactura(){
 				if(factura==null){
@@ -489,6 +490,7 @@ public class Main extends Application {
 						e.printStackTrace();
 					}
 				}
+				controladorTarjeta.setTotPagar(1000.00);
 				tarjeta.show();
 				}
 
